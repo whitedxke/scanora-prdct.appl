@@ -1,5 +1,5 @@
 //
-//  ApplicationViewState.swift
+//  ViewState.swift
 //  Scanora
 //
 //  Created by Pavel Betenya on 28.02.26.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum ApplicationViewState<T> {
+enum ViewState<Value> {
     case idle
     case loading
     case empty
-    case success(T)
+    case success(Value)
     case error(String)
 }

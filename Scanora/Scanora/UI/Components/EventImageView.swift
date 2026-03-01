@@ -45,22 +45,16 @@ struct EventImageView: View {
         }
         .frame(maxWidth: fillsWidth ? .infinity : nil)
         .frame(height: height)
-        .background(
-            Color.gray.opacity(0.12),
-        )
+        .background(Color.gray.opacity(0.12))
         .clipped()
-        .clipShape(
-            RoundedRectangle(cornerRadius: 12, style: .continuous),
-        )
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
     private var placeholder: some View {
         ZStack {
             Color(.systemGray4)
             Image(systemName: "calendar.badge.clock")
-                .font(
-                    .system(size: 48, weight: .medium),
-                )
+                .font(.system(size: 48, weight: .medium))
                 .foregroundStyle(.white)
         }
     }

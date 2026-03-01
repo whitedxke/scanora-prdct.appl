@@ -7,31 +7,26 @@
 
 import SwiftUI
 
-struct Navigation: View {
-    let eventProtocolRepository: any EventProtocolRepository
+struct AppNavigation: View {
+    let eventRepository: any EventRepository
 
     var body: some View {
         GeometryReader { proxy in
             NavigationStack {
-                ScannerScene(eventProtocolRepository: eventProtocolRepository)
+                ScannerScene(eventRepository: eventRepository)
                     .overlay(alignment: .bottomTrailing) {
                         NavigationLink {
-                            EventsListScene(eventProtocolRepository: eventProtocolRepository)
+                            EventsListScene(eventRepository: eventRepository)
                         } label: {
                             CircleIcon {
                                 Image(systemName: "list.bullet")
-                                    .font(
-                                        .system(size: 20, weight: .semibold),
-                                    )
+                                    .font(.system(size: 20, weight: .semibold))
                                     .foregroundStyle(.secondary)
                             }
                         }
                         .buttonStyle(.plain)
                         .padding(.trailing, 24)
-                        .padding(
-                            .bottom,
-                            max(24, proxy.safeAreaInsets.bottom + 12),
-                        )
+                        .padding(.bottom, max(24, proxy.safeAreaInsets.bottom + 12))
                     }
             }
         }
@@ -42,9 +37,9 @@ struct Navigation: View {
 private struct ScannerScene: View {
     @StateObject private var controller: ScannerController
 
-    init(eventProtocolRepository: any EventProtocolRepository) {
+    init(eventRepository: any EventRepository) {
         _controller = StateObject(
-            wrappedValue: ScannerController(eventProtocolRepository: eventProtocolRepository),
+            wrappedValue: ScannerController(eventRepository: eventRepository)
         )
     }
 
@@ -57,9 +52,9 @@ private struct ScannerScene: View {
 private struct EventsListScene: View {
     @StateObject private var controller: EventsListController
 
-    init(eventProtocolRepository: any EventProtocolRepository) {
+    init(eventRepository: any EventRepository) {
         _controller = StateObject(
-            wrappedValue: EventsListController(eventRepository: eventProtocolRepository),
+            wrappedValue: EventsListController(eventRepository: eventRepository)
         )
     }
 

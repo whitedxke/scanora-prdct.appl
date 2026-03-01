@@ -19,23 +19,23 @@ final class QRScannerViewController: UIViewController {
 
     override func viewDidLoad() {
         view.backgroundColor = .black
-        metadataDelegate.onDetected = { [weak self] value in
+        metadataDelegate.detectedHandler = { [weak self] value in
             Task { @MainActor in
-                self?.delegate?.onScan(value: value)
+                self?.delegate?.didScan(value: value)
             }
         }
-        
+
         super.viewDidLoad()
     }
 
     override func viewDidLayoutSubviews() {
         captureVideoPreviewLayer?.frame = view.bounds
-        
+
         super.viewDidLayoutSubviews()
     }
 
     /// Configures and starts a camera capture session.
-    func onStart() {
+    func start() {
         guard !isSessionConfigured else {
             if !captureSession.isRunning {
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -80,7 +80,7 @@ final class QRScannerViewController: UIViewController {
     }
 
     /// Stops the camera capture session.
-    func onStop() {
+    func stop() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.captureSession.stopRunning()
         }
@@ -89,7 +89,7 @@ final class QRScannerViewController: UIViewController {
 
 /// A delegate receiving the result of scanning a QR-code.
 protocol QRScannerDelegate: AnyObject {
-    @MainActor func onScan(value: String)
+    @MainActor func didScan(value: String)
 }
 
 // MARK: - MetadataDelegate.
@@ -98,7 +98,7 @@ protocol QRScannerDelegate: AnyObject {
 private final class MetadataDelegate: NSObject,
     @preconcurrency AVCaptureMetadataOutputObjectsDelegate
 {
-    nonisolated(unsafe) var onDetected: ((String) -> Void)?
+    nonisolated(unsafe) var detectedHandler: ((String) -> Void)?
 
     nonisolated func metadataOutput(
         _ output: AVCaptureMetadataOutput,
@@ -112,6 +112,6 @@ private final class MetadataDelegate: NSObject,
             return
         }
 
-        onDetected?(stringValue)
+        detectedHandler?(stringValue)
     }
 }

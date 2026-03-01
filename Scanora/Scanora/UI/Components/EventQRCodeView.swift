@@ -10,9 +10,15 @@ import SwiftUI
 
 struct EventQRCodeView: View {
     let event: Event
+    private let payloadEncoder: EventQRCodePayloadEncoding
 
     private let context = CIContext()
     private let filter = CIFilter.qrCodeGenerator()
+
+    init(event: Event, payloadEncoder: EventQRCodePayloadEncoding = JSONEventQRCodePayloadEncoder()) {
+        self.event = event
+        self.payloadEncoder = payloadEncoder
+    }
 
     var body: some View {
         VStack {
@@ -23,15 +29,10 @@ struct EventQRCodeView: View {
                 .scaledToFit()
                 .frame(maxWidth: 280, maxHeight: 280)
                 .padding(16)
-                .background(
-                    Color.white, in: RoundedRectangle(cornerRadius: 16),
-                )
+                .background(Color.white, in: RoundedRectangle(cornerRadius: 16))
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(
-                            Color.gray.opacity(0.2),
-                            lineWidth: 1,
-                        )
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                 )
             Spacer()
         }
@@ -42,7 +43,8 @@ struct EventQRCodeView: View {
 
     /// Generates a QR code from event JSON data.
     private var qrImage: Image {
-        guard let data = event.qrPayloadJSONString.data(using: .utf8) else {
+        let payload = payloadEncoder.encode(event)
+        guard let data = payload.data(using: .utf8) else {
             return Image(systemName: "qrcode")
         }
 

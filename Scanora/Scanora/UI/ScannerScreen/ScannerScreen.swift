@@ -24,26 +24,22 @@ struct ScannerScreen: View {
                 .padding(.top, 32)
                 .padding(.horizontal, 24)
                 Spacer(minLength: 0)
-                onCameraStatus(qrSide: qrSide)
+                cameraStatusView(qrSide: qrSide)
                     .frame(width: qrSide, height: qrSide)
                     .padding(.horizontal, 24)
                 if !controller.isScanning {
                     Button("Сброс") {
-                        controller.onDispose()
+                        controller.resetState()
                     }
                     .buttonStyle(.plain)
                 }
                 Spacer(minLength: 0)
             }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .top,
-            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
-            controller.onRequestCameraPermission()
+            controller.requestCameraPermission()
         }
     }
 
@@ -51,16 +47,16 @@ struct ScannerScreen: View {
 
     /// Displays the camera or status depending on the resolution.
     @ViewBuilder
-    private func onCameraStatus(qrSide: CGFloat) -> some View {
+    private func cameraStatusView(qrSide: CGFloat) -> some View {
         switch controller.cameraPermission {
         case .notDetermined:
-            onBaseCard(
+            baseCard(
                 icon: "camera",
                 text: "Запрашиваем доступ к камере...",
                 color: .secondary
             )
         case .denied:
-            onBaseCard(
+            baseCard(
                 icon: "camera.badge.exclamationmark",
                 text: "Доступ к камере запрещён. Разрешите в настройках.",
                 color: .red
@@ -70,12 +66,10 @@ struct ScannerScreen: View {
                 QRScannerView(
                     isScanning: controller.isScanning,
                     onScan: { value in
-                        controller.onHandleScannedData(value)
+                        controller.handleScannedData(value)
                     }
                 )
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 12),
-                )
+                .clipShape(RoundedRectangle(cornerRadius: 12))
                 statusOverlay
             }
         }
@@ -90,16 +84,16 @@ struct ScannerScreen: View {
         case .loading:
             loadingOverlay
         case .success(let message):
-            onOverlayCard(
+            overlayCard(
                 icon: "checkmark.circle.fill",
                 text: message,
-                color: .green,
+                color: .green
             )
         case .error(let message):
-            onOverlayCard(
+            overlayCard(
                 icon: "xmark.circle.fill",
                 text: message,
-                color: .red,
+                color: .red
             )
         case .empty:
             EmptyView()
@@ -116,20 +110,14 @@ struct ScannerScreen: View {
                 .foregroundStyle(.white)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Color.black.opacity(0.5),
-        )
-        .clipShape(
-            RoundedRectangle(cornerRadius: 12),
-        )
+        .background(Color.black.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
-    private func onOverlayCard(icon: String, text: String, color: Color) -> some View {
+    private func overlayCard(icon: String, text: String, color: Color) -> some View {
         VStack(spacing: 16) {
             Image(systemName: icon)
-                .font(
-                    .system(size: 56, weight: .regular),
-                )
+                .font(.system(size: 56, weight: .regular))
                 .foregroundStyle(color)
             Text(text)
                 .font(.body)
@@ -138,20 +126,14 @@ struct ScannerScreen: View {
         }
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Color.black.opacity(0.6),
-        )
-        .clipShape(
-            RoundedRectangle(cornerRadius: 12),
-        )
+        .background(Color.black.opacity(0.6))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
-    private func onBaseCard(icon: String, text: String, color: Color) -> some View {
+    private func baseCard(icon: String, text: String, color: Color) -> some View {
         VStack(spacing: 16) {
             Image(systemName: icon)
-                .font(
-                    .system(size: 56, weight: .regular),
-                )
+                .font(.system(size: 56, weight: .regular))
                 .foregroundStyle(color)
             Text(text)
                 .font(.body)
@@ -163,11 +145,7 @@ struct ScannerScreen: View {
         .padding(.vertical, 24)
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Color.gray.opacity(0.1),
-        )
-        .clipShape(
-            RoundedRectangle(cornerRadius: 12),
-        )
+        .background(Color.gray.opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
