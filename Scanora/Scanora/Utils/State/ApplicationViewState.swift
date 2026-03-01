@@ -1,3 +1,10 @@
+//
+//  ApplicationViewState.swift
+//  Scanora
+//
+//  Created by Pavel Betenya on 28.02.26.
+//
+
 import Foundation
 
 enum ApplicationViewState<T> {

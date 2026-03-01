@@ -1,14 +1,20 @@
+//
+//  DateUtils.swift
+//  Scanora
+//
+//  Created by Pavel Betenya on 28.02.26.
+//
+
 import Foundation
 
 extension Date {
     private static let eventDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        
         formatter.locale = Locale(
             identifier: "ru_RU",
         )
         formatter.dateFormat = "d MMMM yyyy HH:mm"
-        
+
         return formatter
     }()
 
@@ -16,11 +22,11 @@ extension Date {
         let rawText = Self.eventDateFormatter.string(
             from: self,
         )
-        
+
         guard let first = rawText.first else {
             return rawText
         }
-        
+
         return String(first).uppercased() + rawText.dropFirst()
     }
 }

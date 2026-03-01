@@ -1,3 +1,10 @@
+//
+//  CircleButton.swift
+//  Scanora
+//
+//  Created by Pavel Betenya on 28.02.26.
+//
+
 import SwiftUI
 
 struct CircleButton<Label: View>: View {

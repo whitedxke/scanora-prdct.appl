@@ -1,3 +1,10 @@
+//
+//  EventQRCodeView.swift
+//  Scanora
+//
+//  Created by Pavel Betenya on 28.02.26.
+//
+
 import CoreImage.CIFilterBuiltins
 import SwiftUI
 
@@ -10,19 +17,22 @@ struct EventQRCodeView: View {
     var body: some View {
         VStack {
             Spacer()
-
             qrImage
                 .resizable()
                 .interpolation(.none)
                 .scaledToFit()
                 .frame(maxWidth: 280, maxHeight: 280)
                 .padding(16)
-                .background(Color.white, in: RoundedRectangle(cornerRadius: 16))
+                .background(
+                    Color.white, in: RoundedRectangle(cornerRadius: 16),
+                )
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        .stroke(
+                            Color.gray.opacity(0.2),
+                            lineWidth: 1,
+                        )
                 )
-
             Spacer()
         }
         .padding(.horizontal, 16)
@@ -30,19 +40,23 @@ struct EventQRCodeView: View {
         .ignoresSafeArea(.container, edges: .bottom)
     }
 
+    /// Generates a QR code from event JSON data.
     private var qrImage: Image {
-        guard
-            let data = event.qrPayloadJSONString.data(using: .utf8)
-        else {
+        guard let data = event.qrPayloadJSONString.data(using: .utf8) else {
             return Image(systemName: "qrcode")
         }
 
         filter.setValue(data, forKey: "inputMessage")
 
-        guard
-            let outputImage = filter.outputImage,
-            let cgImage = context.createCGImage(outputImage.transformed(by: CGAffineTransform(scaleX: 10, y: 10)), from: outputImage.extent)
-        else {
+        guard let outputImage = filter.outputImage else {
+            return Image(systemName: "qrcode")
+        }
+
+        let scaledImage = outputImage.transformed(
+            by: CGAffineTransform(scaleX: 10, y: 10)
+        )
+
+        guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else {
             return Image(systemName: "qrcode")
         }
 

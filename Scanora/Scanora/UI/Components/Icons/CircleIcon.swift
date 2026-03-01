@@ -1,3 +1,10 @@
+//
+//  CircleIcon.swift
+//  Scanora
+//
+//  Created by Pavel Betenya on 28.02.26.
+//
+
 import SwiftUI
 
 struct CircleIcon<Label: View>: View {
@@ -12,11 +19,20 @@ struct CircleIcon<Label: View>: View {
     var body: some View {
         label()
             .frame(width: size, height: size)
-            .background(.ultraThinMaterial, in: Circle())
+            .background(
+                .ultraThinMaterial, in: Circle(),
+            )
             .overlay(
                 Circle()
-                    .stroke(Color.white.opacity(0.45), lineWidth: 0.8)
+                    .stroke(
+                        Color.white.opacity(0.45), lineWidth: 0.8,
+                    )
             )
-            .shadow(color: .black.opacity(0.16), radius: 8, x: 0, y: 3)
+            .shadow(
+                color: .black.opacity(0.16),
+                radius: 8,
+                x: 0,
+                y: 3,
+            )
     }
 }
