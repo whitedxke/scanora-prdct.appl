@@ -1,3 +1,10 @@
+//
+//  EventDetailsController.swift
+//  Scanora
+//
+//  Created by Pavel Betenya on 28.02.26.
+//
+
 import Combine
 import Foundation
 
@@ -10,7 +17,7 @@ final class EventDetailsController: ObservableObject {
         self.event = event
     }
 
-    func presentQRCode() {
+    func onPresentQRCode() {
         isQRCodePresented = true
     }
 }
