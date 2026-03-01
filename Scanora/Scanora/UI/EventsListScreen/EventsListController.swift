@@ -10,53 +10,51 @@ import Foundation
 
 @MainActor
 final class EventsListController: ObservableObject {
-    @Published private(set) var state: ApplicationViewState<[Event]> = .idle
+    @Published private(set) var state: ViewState<[Event]> = .idle
     @Published private(set) var mode: EventsMode = .active
 
-    private let eventProtocolRepository: EventProtocolRepository
+    private let eventRepository: EventRepository
     private var cancellables: Set<AnyCancellable> = []
 
-    init(eventRepository: EventProtocolRepository) {
-        self.eventProtocolRepository = eventRepository
+    init(eventRepository: EventRepository) {
+        self.eventRepository = eventRepository
 
-        eventRepository.onEventsPublisher
+        eventRepository.eventsPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.onApplyState()
+                self?.applyState()
             }
             .store(in: &cancellables)
     }
 
-    func onAppear() {
-        guard case .idle = state else {
-            return
-        }
-        
+    func handleAppear() {
+        guard case .idle = state else { return }
+
         state = .loading
         Task {
             try? await Task.sleep(nanoseconds: 350_000_000)
-            onApplyState()
+            applyState()
         }
     }
 
-    func onToggleMode() {
+    func toggleMode() {
         mode = mode == .active ? .completed : .active
-        onApplyState()
+        applyState()
     }
 
-    func onDisplayStatus(for event: Event) -> String {
+    func displayStatus(for event: Event) -> String {
         event.status.title
     }
 
     /// Filters events by current mode.
-    private func onApplyState() {
-        let source = eventProtocolRepository.onEventsSnapshot
+    private func applyState() {
+        let source = eventRepository.eventsSnapshot
         let filtered: [Event]
 
         switch mode {
         case .active:
             filtered = source.filter {
-                $0.status.isActive
+                $0.status.isUpcoming
             }
         case .completed:
             filtered = source.filter {
@@ -72,7 +70,7 @@ enum EventsMode {
     case active
     case completed
 
-    var switchButtonTitle: String {
+    var toggleButtonTitle: String {
         switch self {
         case .active:
             return "Завершено"

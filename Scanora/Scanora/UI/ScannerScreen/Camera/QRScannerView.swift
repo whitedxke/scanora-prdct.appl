@@ -15,15 +15,15 @@ struct QRScannerView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> QRScannerViewController {
         let controller = QRScannerViewController()
         controller.delegate = context.coordinator
-        
+
         return controller
     }
 
     func updateUIViewController(_ uiViewController: QRScannerViewController, context: Context) {
         if isScanning {
-            uiViewController.onStart()
+            uiViewController.start()
         } else {
-            uiViewController.onStop()
+            uiViewController.stop()
         }
     }
 
@@ -39,7 +39,7 @@ struct QRScannerView: UIViewControllerRepresentable {
             self.onScan = onScanned
         }
 
-        func onScan(value: String) {
+        func didScan(value: String) {
             onScan(value)
         }
     }

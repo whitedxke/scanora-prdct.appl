@@ -12,7 +12,7 @@ import Foundation
 /// Attempts JSON parsing first, then falls back to hash mapping.
 enum QRCodeResolver {
     /// Attempts to create an event from a QR-code string.
-    static func resolve(rawValue: String, existingIDs: Set<Int>) -> QRResolveResult {
+    static func resolve(rawValue: String, existingIDs: Set<Int>) -> QRCodeResolutionResult {
         // Attempt to parse as valid event JSON.
         if let event = resolveFromJSON(rawValue) {
             if existingIDs.contains(event.id) {
@@ -31,13 +31,13 @@ enum QRCodeResolver {
 
     // MARK: - JSON Parsing.
 
-    /// Attempts to parse the string as EventQRPayload JSON.
+    /// Attempts to parse the string as EventQRCodePayload JSON.
     private static func resolveFromJSON(_ rawValue: String) -> Event? {
         guard let data = rawValue.data(using: .utf8) else {
             return nil
         }
 
-        guard let payload = try? JSONDecoder().decode(EventQRPayload.self, from: data) else {
+        guard let payload = try? JSONDecoder().decode(EventQRCodePayload.self, from: data) else {
             return nil
         }
 
@@ -63,9 +63,7 @@ enum QRCodeResolver {
 
     /// Creates an event from SHA256 hash of the string using the template pool.
     private static func resolveFromHash(_ rawValue: String) -> Event {
-        let hashData = SHA256.hash(
-            data: Data(rawValue.utf8),
-        )
+        let hashData = SHA256.hash(data: Data(rawValue.utf8))
         let hashBytes = Array(hashData)
 
         // First 8 bytes → stable UInt64 for deterministic selection.
@@ -73,9 +71,7 @@ enum QRCodeResolver {
             result | (UInt64(pair.element) << (pair.offset * 8))
         }
 
-        let poolIndex = Int(
-            idValue % UInt64(MockEventPool.count),
-        )
+        let poolIndex = Int(idValue % UInt64(MockEventPool.count))
         let eventID = Int(idValue & 0x7FFFFFFFFFFFFFFF)
         let template = MockEventPool.templates[poolIndex]
         return Event(
@@ -89,8 +85,17 @@ enum QRCodeResolver {
 }
 
 /// QR-code resolution result.
-enum QRResolveResult {
+enum QRCodeResolutionResult {
     case success(Event)
     case duplicate
     case failure(String)
+}
+
+private struct EventQRCodePayload: Decodable {
+    let id: Int?
+    let title: String?
+    let description: String?
+    let date: String?
+    let status: String?
+    let image: String?
 }

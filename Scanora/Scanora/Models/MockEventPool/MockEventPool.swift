@@ -22,7 +22,7 @@ enum MockEventPool {
         let formatter = ISO8601DateFormatter()
 
         /// Auxiliary function for creating a date from a string.
-        func onDate(_ isoString: String) -> Date {
+        func makeDate(_ isoString: String) -> Date {
             formatter.date(from: isoString) ?? Date.now
         }
 
@@ -40,7 +40,7 @@ enum MockEventPool {
 
                 Realize the full potential of AI with a solution that evolves alongside your ambitions. Tailor Claude's capabilities to your unique needs, supported by the partnership of AWS. Our collaborative approach ensures your AI initiatives drive value and innovation, from concept to implementation.
                 """,
-                date: onDate("2024-12-11T00:00:00Z"),
+                date: makeDate("2024-12-11T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -51,7 +51,7 @@ enum MockEventPool {
 
                 If you are a founder building at the frontier of AI, join us to learn more about Anthropic's leading family of models, connect with peers, and hear from our research team about what's top of mind and how we can help bring your AI-powered ideas to life.
                 """,
-                date: onDate("2025-02-14T00:00:00Z"),
+                date: makeDate("2025-02-14T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -62,7 +62,7 @@ enum MockEventPool {
 
                 If you are a founder building at the frontier of AI, join us to learn more about Anthropic's leading family of models, connect with peers, and hear from our research team about what's top of mind and how we can help bring your AI-powered ideas to life.
                 """,
-                date: onDate("2025-02-24T00:00:00Z"),
+                date: makeDate("2025-02-24T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -78,7 +78,7 @@ enum MockEventPool {
 
                 The combination of Claude on Google Cloud's Vertex AI creates a powerful foundation for developing effective AI agents that can transform your business. Claude's advanced reasoning and ability to handle complex context, coupled with Vertex AI's robust infrastructure and direct integration with Google Cloud services, enables organizations to build AI agents that can plan, act, and adapt autonomously. This combination is crucial for businesses as AI agents become essential for automating complex workflows, enhancing decision-making, and scaling operations.
                 """,
-                date: onDate("2025-02-25T00:00:00Z"),
+                date: makeDate("2025-02-25T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -89,7 +89,7 @@ enum MockEventPool {
 
                 The AWS Summit London is our largest free cloud technology event in the UK. This is where the latest in cloud innovation comes to life, providing an opportunity to explore cutting-edge technologies—from generative AI to serverless computing—that are revolutionising industries and empowering businesses to lead in the digital era.
                 """,
-                date: onDate("2025-01-04T00:00:00Z"),
+                date: makeDate("2025-01-04T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -102,7 +102,7 @@ enum MockEventPool {
 
                 The conference will showcase how developers are maximizing Claude's capabilities across our models, products, and API. You'll learn about our product roadmap, Claude Code, MCP, development methodologies, AI agent implementation strategies, and tool use patterns from the technical teams building Claude-powered applications at leading companies.
                 """,
-                date: onDate("2025-03-04T00:00:00Z"),
+                date: makeDate("2025-03-04T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -113,7 +113,7 @@ enum MockEventPool {
 
                 Connect with peers in focused discussion forums while exploring solutions in our dynamic Expo. Throughout your journey, you'll build alongside AWS experts who understand your unique challenges.
                 """,
-                date: onDate("2025-03-10T00:00:00Z"),
+                date: makeDate("2025-03-10T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -124,7 +124,7 @@ enum MockEventPool {
 
                 Take advantage of the keynote speeches, over 150 sessions, and over 250 EXPO contents to enhance your learning experience.
                 """,
-                date: onDate("2025-03-18T00:00:00Z"),
+                date: makeDate("2025-03-18T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -143,7 +143,7 @@ enum MockEventPool {
                 Who should attend
                 Senior leaders shaping AI strategy at financial institutions—from heads of innovation and technology to risk officers and operations executives exploring transformation opportunities.
                 """,
-                date: onDate("2025-04-10T00:00:00Z"),
+                date: makeDate("2025-04-10T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -154,7 +154,7 @@ enum MockEventPool {
 
                 Customize your experience by choosing sessions that best fit your business needs, such as interactive workshops or customer showcases, all while networking with like-minded professionals.
                 """,
-                date: onDate("2025-07-14T00:00:00Z"),
+                date: makeDate("2025-07-14T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -166,7 +166,7 @@ enum MockEventPool {
                 About Anthropic
                 Anthropic is a frontier AI company building reliable, interpretable, and steerable artificial intelligence systems. Founded in 2021 and now one of the most valuable private companies in the world, we are among the fastest growing companies in history. Our flagship AI assistant, Claude, serves millions of users each day, from Fortune 500 companies and government agencies to small businesses and individuals.
                 """,
-                date: onDate("2026-04-10T00:00:00Z"),
+                date: makeDate("2026-04-10T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -182,7 +182,7 @@ enum MockEventPool {
                 • Understand executive perspectives from your peers and Anthropic's partners on their AI transformation journeys
                 • Witness how Claude's healthcare-specific capabilities can solve real life problems
                 """,
-                date: onDate("2026-04-14T00:00:00Z"),
+                date: makeDate("2026-04-14T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -201,7 +201,7 @@ enum MockEventPool {
                 Who should watch
                 This event is designed for senior leaders shaping AI strategy at their organizations: CIOs, CROs, General Counsels, and heads of analytics.
                 """,
-                date: onDate("2026-08-06T00:00:00Z"),
+                date: makeDate("2026-08-06T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -226,7 +226,7 @@ enum MockEventPool {
                 • Shopify: Shopify powers Sidekick, an AI commerce assistant that helps millions of merchants get expert-level guidance with Claude on Vertex AI
                 • Augment Code: Augment Code transforms how developers understand and work with sophisticated codebases with Claude on Vertex AI
                 """,
-                date: onDate("2026-09-18T00:00:00Z"),
+                date: makeDate("2026-09-18T00:00:00Z"),
                 image: "MockAnthropicEventBanner"
             ),
 
@@ -239,7 +239,7 @@ enum MockEventPool {
 
                 We'll walk through practical examples of how Codex can generate code, answer questions about your repository, and assist with tasks like refactoring, testing, and documentation. Whether you're exploring AI-assisted development for the first time or evaluating how it could fit into your engineering workflow, this session will help you understand the capabilities and practical applications of Codex. Designed for software engineers and technical builders interested in incorporating AI into their development workflows.
                 """,
-                date: onDate("2026-09-15T00:00:00Z"),
+                date: makeDate("2026-09-15T00:00:00Z"),
                 image: ""
             ),
 
@@ -248,7 +248,7 @@ enum MockEventPool {
                 eventDescription: """
                 Join us for a beginner friendly, high-level overview of Codex — the AI system that powers code generation. We'll explain what Codex is, explore examples of how people are using it for real work and everyday tasks, and show how non-technical professionals can benefit from it today. Whether you're curious about the future of AI and software, want to better collaborate with technical teams, or simply want to understand the possibilities, this webinar is your starting point. No coding experience needed!
                 """,
-                date: onDate("2025-08-10T00:00:00Z"),
+                date: makeDate("2025-08-10T00:00:00Z"),
                 image: ""
             ),
 
@@ -265,7 +265,7 @@ enum MockEventPool {
 
                 You'll leave with the knowledge and confidence to start using ChatGPT in your daily work, plus resources to continue learning and applying AI responsibly.
                 """,
-                date: onDate("2026-10-18T00:00:00Z"),
+                date: makeDate("2026-10-18T00:00:00Z"),
                 image: ""
             ),
 
@@ -274,9 +274,9 @@ enum MockEventPool {
                 eventDescription: """
                 In this webinar, we'll walk through practical ways to use ChatGPT to prepare for new opportunities, from refining your resume to getting ready for interviews. We'll explore how ChatGPT can help you organize your experience, practice interview questions, and build confidence throughout the job search process. This session is designed to be approachable and useful whether you're actively applying for roles or simply looking to strengthen your career readiness. We'll close with time to answer any frequently asked questions we received throughout the session!
                 """,
-                date: onDate("2025-03-14T00:00:00Z"),
+                date: makeDate("2025-03-14T00:00:00Z"),
                 image: ""
-            ),
+            )
         ]
     }()
 

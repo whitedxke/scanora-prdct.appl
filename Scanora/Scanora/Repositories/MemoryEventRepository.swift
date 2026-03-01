@@ -9,24 +9,24 @@ import Combine
 import Foundation
 
 /// In-memory event storage.
-final class MemoryEventRepository: ObservableObject, EventProtocolRepository {
+final class MemoryEventRepository: ObservableObject, EventRepository {
     @Published private(set) var events: [Event] = []
 
-    var onEventsSnapshot: [Event] {
+    var eventsSnapshot: [Event] {
         events
     }
 
-    var onEventsPublisher: AnyPublisher<[Event], Never> {
+    var eventsPublisher: AnyPublisher<[Event], Never> {
         $events.eraseToAnyPublisher()
     }
 
     /// Adds an event to the array.
-    func onAdd(_ event: Event) {
+    func add(_ event: Event) {
         events.append(event)
     }
 
     /// Checks whether an event with the given id exists.
-    func onContain(id: Int) -> Bool {
+    func containsEvent(withID id: Int) -> Bool {
         events.contains(where: { $0.id == id })
     }
 }

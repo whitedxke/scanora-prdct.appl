@@ -20,7 +20,7 @@ enum EventStatus: String, Codable, CaseIterable {
         }
     }
 
-    var isActive: Bool {
+    var isUpcoming: Bool {
         self == .upcoming
     }
 }

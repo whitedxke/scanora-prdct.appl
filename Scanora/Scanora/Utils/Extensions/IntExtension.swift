@@ -8,7 +8,7 @@
 import Foundation
 
 extension Optional where Wrapped == Int {
-    var orZero: Int {
+    var orEmpty: Int {
         self ?? -1
     }
 }

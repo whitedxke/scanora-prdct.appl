@@ -1,5 +1,5 @@
 //
-//  ScanoraApplication.swift
+//  ScanoraApp.swift
 //  Scanora
 //
 //  Created by Pavel Betenya on 28.02.26.
@@ -9,13 +9,13 @@ import SwiftUI
 
 /// Entry point of the Scanora application.
 @main
-struct ScanoraApplication: App {
+struct ScanoraApp: App {
     @StateObject private var persistentEventRepository = PersistentEventRepository()
 
     var body: some Scene {
         WindowGroup {
-            Navigation(
-                eventProtocolRepository: persistentEventRepository,
+            AppNavigation(
+                eventRepository: persistentEventRepository
             )
         }
     }

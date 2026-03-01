@@ -17,7 +17,7 @@ final class EventDetailsController: ObservableObject {
         self.event = event
     }
 
-    func onPresentQRCode() {
+    func presentQRCode() {
         isQRCodePresented = true
     }
 }

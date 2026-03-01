@@ -9,75 +9,53 @@ import Combine
 import Foundation
 
 /// Event storage with file system persistence (JSON).
-final class PersistentEventRepository: ObservableObject, EventProtocolRepository {
+final class PersistentEventRepository: ObservableObject, EventRepository {
     @Published private(set) var events: [Event] = []
 
-    private static let fileName = "scanora_events.json"
+    private let store: EventStore
+    private let logger: Logger
 
-    var onEventsSnapshot: [Event] { events }
+    var eventsSnapshot: [Event] { events }
 
-    var onEventsPublisher: AnyPublisher<[Event], Never> {
+    var eventsPublisher: AnyPublisher<[Event], Never> {
         $events.eraseToAnyPublisher()
     }
 
-    init() {
-        events = Self.onLoad()
+    init(
+        store: EventStore = JSONFileEventStore.appDocumentsStore(),
+        logger: Logger = ConsoleLogger()
+    ) {
+        self.store = store
+        self.logger = logger
+        events = load()
     }
 
     /// Adds an event and saves to disk.
-    func onAdd(_ event: Event) {
+    func add(_ event: Event) {
         events.append(event)
-        onSave()
+        save()
     }
 
     /// Checks whether an event with the given id exists.
-    func onContain(id: Int) -> Bool {
-        events.contains(
-            where: {
-                $0.id == id
-            },
-        )
+    func containsEvent(withID id: Int) -> Bool {
+        events.contains(where: { $0.id == id })
     }
 
-    // MARK: - File System Operations.
+    // MARK: - Persistence.
 
-    /// Path to the storage file.
-    private static var fileURL: URL {
-        FileManager.default
-            .urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent(fileName)
-    }
-
-    /// Saves the current events array to disk.
-    private func onSave() {
+    private func save() {
         do {
-            let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .iso8601
-            let data = try encoder.encode(events)
-            try data.write(
-                to: Self.fileURL,
-                options: [.atomic],
-            )
+            try store.saveEvents(events)
         } catch {
-            print("[PersistentEventRepository] Save error: \(error).")
+            logger.error("[PersistentEventRepository] Save error: \(error).")
         }
     }
 
-    /// Loads the events array from disk.
-    private static func onLoad() -> [Event] {
-        guard FileManager.default.fileExists(atPath: fileURL.path) else {
-            return []
-        }
+    private func load() -> [Event] {
         do {
-            let data = try Data(contentsOf: fileURL)
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            return try decoder.decode(
-                [Event].self,
-                from: data,
-            )
+            return try store.loadEvents()
         } catch {
-            print("[PersistentEventRepository] Load error: \(error).")
+            logger.error("[PersistentEventRepository] Load error: \(error).")
             return []
         }
     }
