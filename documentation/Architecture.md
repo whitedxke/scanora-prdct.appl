@@ -24,13 +24,13 @@
 
 - `Event` (`Models/Event/Event.swift`) — `Identifiable`, `Codable`, `Hashable`. Fields: `id`, `title`, `eventDescription`, `date`, `image`. `status` is a computed property (`date > .now` → `.upcoming`, otherwise `.completed`) and is excluded from encoding via explicit `CodingKeys`.
 - `EventStatus` (`Models/Event/EventStatus.swift`) — `upcoming` / `completed`, with localized display titles.
-- `MockEventPool` (`Models/MockEventPool/MockEventPool.swift`) — a static pool of ~16 sample event templates, used as a deterministic fallback source when a scanned QR payload isn't valid event JSON. See [Scanner.md](Scanner.md).
+- `MockEventPool` (`Models/MockEventPool/MockEventPool.swift`) — a static pool of ~7 sample event templates, used as a deterministic fallback source when a scanned QR payload isn't valid event JSON. See [Scanner.md](Scanner.md).
 
 ## 5. UI Layer.
 
 - Screens: `ScannerScreen`, `EventsListScreen`, `EventDetailsScreen` — each paired 1:1 with an `ObservableObject` controller that owns `@Published` state.
 - Reusable components: `CircleButton` / `CircleIcon` (chrome), `EventImageView` (renders a remote URL, a local asset, or a placeholder), `EventQRCodeView` (QR image generation, see [Scanner.md](Scanner.md)).
-- `EventImageResourceResolver` decides whether an event's `image` string is a remote `http(s)` URL, the legacy `"event_mock_banner"` string (mapped to the bundled `MockAnthropicEventBanner` asset), another asset name, or empty (placeholder).
+- `EventImageResourceResolver` decides whether an event's `image` string is a remote `http(s)` URL, the legacy `"event_mock_banner"` string (mapped to the bundled `MockEventBanner` asset), another asset name, or empty (placeholder).
 
 ## 6. Backend Readiness.
 
@@ -54,7 +54,7 @@ Scanora/
     │   ├── Contents.json
     │   ├── AccentColor.colorset/Contents.json
     │   ├── AppIcon.appiconset/Contents.json
-    │   └── MockAnthropicEventBanner.imageset/
+    │   └── MockEventBanner.imageset/
     │       ├── Contents.json
     │       ├── event_mock_banner.png
     │       ├── event_mock_banner@2x.png
@@ -122,10 +122,10 @@ Scanora/
 - `Assets.xcassets/Contents.json` — root asset catalog manifest.
 - `Assets.xcassets/AccentColor.colorset/Contents.json` — accent color configuration.
 - `Assets.xcassets/AppIcon.appiconset/Contents.json` — application icon configuration.
-- `Assets.xcassets/MockAnthropicEventBanner.imageset/Contents.json` — image set manifest.
-- `Assets.xcassets/MockAnthropicEventBanner.imageset/event_mock_banner.png` — banner image 1x.
-- `Assets.xcassets/MockAnthropicEventBanner.imageset/event_mock_banner@2x.png` — banner image 2x.
-- `Assets.xcassets/MockAnthropicEventBanner.imageset/event_mock_banner@3x.png` — banner image 3x.
+- `Assets.xcassets/MockEventBanner.imageset/Contents.json` — image set manifest.
+- `Assets.xcassets/MockEventBanner.imageset/event_mock_banner.png` — banner image 1x.
+- `Assets.xcassets/MockEventBanner.imageset/event_mock_banner@2x.png` — banner image 2x.
+- `Assets.xcassets/MockEventBanner.imageset/event_mock_banner@3x.png` — banner image 3x.
 
 #### `Models`.
 
