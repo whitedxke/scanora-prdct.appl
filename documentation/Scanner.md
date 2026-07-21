@@ -26,7 +26,7 @@ When a QR-code is detected, a background `AVCaptureMetadataOutputObjectsDelegate
 
 `QRCodeResolver.resolve(rawValue:existingIDs:)` (`Utils/QRCodeResolver.swift`) is two-stage:
 
-1. **JSON parsing.** Attempts to decode the raw string as an `EventQRCodePayload` (`id`, `title`, `description`, `date`, `status`, `image` — all optional). Requires `id`, a non-empty `title`, and `date` to build an `Event`; `date` is parsed via `ISO8601DateFormatter` (falls back to `.now` on failure), `image` defaults to `"MockAnthropicEventBanner"` if absent.
+1. **JSON parsing.** Attempts to decode the raw string as an `EventQRCodePayload` (`id`, `title`, `description`, `date`, `status`, `image` — all optional). Requires `id`, a non-empty `title`, and `date` to build an `Event`; `date` is parsed via `ISO8601DateFormatter` (falls back to `.now` on failure), `image` defaults to `"MockEventBanner"` if absent.
 2. **Hash fallback.** Any string that fails JSON parsing is still turned into an `Event`, deterministically: a SHA256 hash (`CryptoKit`) of the raw string is computed, its first 8 bytes become a `UInt64` seed used both to pick a template from `MockEventPool` (`seed % templateCount`) and to derive the event's `id` (masked to a positive `Int`). The same input string always maps to the same generated event.
 
 In both cases, the resolved event's `id` is checked against `existingIDs` (the repository's current snapshot); a match returns `.duplicate` instead of `.success`.
@@ -39,4 +39,4 @@ In both cases, the resolved event's `id` is checked against `existingIDs` (the r
 
 ## 6. Related: Banner Image Resolution.
 
-Not scanner-specific, but reached from the same `image` field: `EventImageResourceResolver` (`Utils/EventImageResourceResolver.swift`) decides whether an event's `image` string is a remote `http(s)` URL, the legacy `"event_mock_banner"` string (mapped to the bundled `MockAnthropicEventBanner` asset), another asset name, or empty (→ placeholder). Used by `EventImageView` on both the list and details screens.
+Not scanner-specific, but reached from the same `image` field: `EventImageResourceResolver` (`Utils/EventImageResourceResolver.swift`) decides whether an event's `image` string is a remote `http(s)` URL, the legacy `"event_mock_banner"` string (mapped to the bundled `MockEventBanner` asset), another asset name, or empty (→ placeholder). Used by `EventImageView` on both the list and details screens.

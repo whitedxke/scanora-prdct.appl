@@ -55,7 +55,7 @@ enum QRCodeResolver {
             title: title,
             eventDescription: payload.description ?? "",
             date: date,
-            image: payload.image ?? "MockAnthropicEventBanner"
+            image: payload.image ?? "MockEventBanner"
         )
     }
 
