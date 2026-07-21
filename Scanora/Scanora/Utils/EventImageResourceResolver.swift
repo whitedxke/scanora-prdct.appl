@@ -32,7 +32,7 @@ enum EventImageResourceResolver {
         }
 
         if rawImageValue == "event_mock_banner" {
-            return EventImageResource(remoteURL: nil, assetName: "MockAnthropicEventBanner")
+            return EventImageResource(remoteURL: nil, assetName: "MockEventBanner")
         }
 
         return EventImageResource(remoteURL: nil, assetName: rawImageValue)

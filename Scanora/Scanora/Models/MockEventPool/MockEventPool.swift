@@ -35,7 +35,7 @@ enum MockEventPool {
                 Join us at the event to find out what the Dxke teams are working on and stay up to date on the latest news.
                 """,
                 date: makeDate("2026-07-21T00:00:00Z"),
-                image: "MockAnthropicEventBanner"
+                image: "MockEventBanner"
             ),
 
             Template(
@@ -44,7 +44,7 @@ enum MockEventPool {
                 White Dxke's AI-Summit in Minsk — a technical event for startup developers. Get a first look at new features and learn how to integrate with external services.
                 """,
                 date: makeDate("2026-07-21T00:00:00Z"),
-                image: "MockAnthropicEventBanner"
+                image: "MockEventBanner"
             ),
 
             Template(
@@ -53,7 +53,7 @@ enum MockEventPool {
                 White Dxke's AI-Summit in Brest — a technical event for startup developers. Get a first look at new features and learn how to integrate with external services.
                 """,
                 date: makeDate("2026-06-20T00:00:00Z"),
-                image: "MockAnthropicEventBanner"
+                image: "MockEventBanner"
             ),
 
             Template(
@@ -62,7 +62,7 @@ enum MockEventPool {
                 White Dxke's AI-Summit in Grodno — a technical event for startup developers. Get a first look at new features and learn how to integrate with external services.
                 """,
                 date: makeDate("2026-08-10T00:00:00Z"),
-                image: "MockAnthropicEventBanner"
+                image: "MockEventBanner"
             ),
 
             Template(
@@ -78,7 +78,7 @@ enum MockEventPool {
                 • Examples of AI applications in healthcare.
                 """,
                 date: makeDate("2026-10-25T00:00:00Z"),
-                image: "MockAnthropicEventBanner"
+                image: "MockEventBanner"
             ),
 
             Template(
